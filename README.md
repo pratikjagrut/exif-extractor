@@ -7,7 +7,7 @@ EXIF Extractor is a command-line utility written in Go that reads the EXIF data 
 Clone the repository:
 
 ```
-git clone https://github.com/your-username/exif-extractor.git
+git clone https://github.com/pratikjagrut/exif-extractor.git
 ```
 
 Change to the project directory:
