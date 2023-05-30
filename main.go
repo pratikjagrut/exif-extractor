@@ -44,8 +44,8 @@ func visit(path string, d fs.DirEntry, err error) error {
 	if d.IsDir() {
 		return nil
 	} else {
-		ext := strings.Split(path, ".")[1]
-		if ext != "jpg" && ext != "jpeg" {
+		ext := strings.ToLower(filepath.Ext(path))
+		if ext != ".jpg" && ext != ".jpeg" {
 			log.Warning("Unsupported image format: %s", path)
 		} else {
 			paths = append(paths, path)
