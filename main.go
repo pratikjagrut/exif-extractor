@@ -70,10 +70,16 @@ func main() {
 	log.Info("Directory to process: %s", cfg.directory)
 	log.Info("Output file location: %s", cfg.output)
 
+	// Check if the directory exists
+	_, err := os.Stat(cfg.directory)
+	if os.IsNotExist(err) {
+		log.Fatal("Directory not found: %s", cfg.directory)
+	}
+
 	// Traverse directory, read EXIF data, and write to output here.
-	err := filepath.WalkDir(cfg.directory, visit)
+	err = filepath.WalkDir(cfg.directory, visit)
 	if err != nil {
-		log.Fatal("error walking the path %v: %v", cfg.directory, err)
+		log.Fatal("Error walking the path %s: %v", cfg.directory, err)
 	}
 
 	data := make([][]string, 0)
@@ -88,7 +94,7 @@ func main() {
 		}
 		gpsLatitude, gpsLongitude, err := dms.NewDMS(latitude, longitude)
 		if err != nil {
-			log.Error("Failed to convert latitude and longitude to gps cordinates: %v", err)
+			log.Error("Failed to convert latitude and longitude to GPS coordinates: %v", err)
 			continue
 		}
 		data = append(data, []string{path, gpsLatitude.String(), gpsLongitude.String()})
